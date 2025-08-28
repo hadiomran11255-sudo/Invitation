@@ -1,80 +1,69 @@
-// App.jsx
 import FallingHearts from "./components/FallingHearts.jsx";
 import { QRCodeCanvas } from "qrcode.react";
-import bgImg from "./assets/wedding.jpg";
-import ringImg from "./assets/weddingring2.png"; 
+import bgImg from "./assets/wedding.jpg";     // background photo
+import ringImg from "./assets/ring.png";     // transparent PNG of the ring
 
 export default function App() {
   return (
     <main className="page">
-      <section className="card" role="article" aria-label="Wedding invitation">
-        <img src={bgImg} alt="" className="bg-img" />
-        <FallingHearts count={18} />
+      {/* Background image */}
+      <img src={bgImg} alt="" className="bg-img" />
 
-        <div className="top-ar" dir="rtl" lang="ar">
-          بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْم
+      {/* Hearts */}
+      <FallingHearts count={18} />
+
+      {/* Content */}
+      <div className="top-ar" dir="rtl" lang="ar">
+        بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْم
+      </div>
+
+      <div className="heading">
+        Please join us to celebrate the<br />wedding of :
+      </div>
+
+      <div className="names">
+        <div className="couple">
+          <div>Samira</div>
+          <div>&</div>
+          <div>Khodor</div>
         </div>
+      </div>
 
-        <div className="heading">
-          Please join us to celebrate the
-          <br />
-          wedding of :
-        </div>
+      {/* Month label above the row (optional – remove if you don't want it twice) */}
+      {/* <div className="section">August</div> */}
 
-        {/* RING IMAGE (rotating) */}
+      {/* ------------- DATE ROW ------------- */}
+      {/* Left and right labels have top & bottom lines. 
+          The center is ONE ring that contains: August / 19 / 2025 */}
+      <div className="date-row">
+        <div className="label-ud">Saturday</div>
+
         <div
-          className="ring-wrap"
-          style={{
-           
-            "--hole": "60%", 
-            "--ring-x": "0px", 
-            "--ring-y": "2px", 
-          }}
+          className="ring-center"
+          style={{ backgroundImage: `url(${ringImg})`, '--ring-size': '92px' }}
         >
-          <div className="ring-tilt">
-            <img src={ringImg} alt="Gold ring" className="ring-img spin" />
-          </div>
-
-          {/* Names (they’ll appear inside the ring) */}
-          <div className="names">
-            <div className="couple">
-              <div>Ahlam</div>
-              <div>&</div>
-              <div>Hadi</div>
-            </div>
+          <div className="ring-stack">
+            <div className="ring-month">August</div>
+            <div className="ring-day">19</div>
+            <div className="ring-year">2025</div>
           </div>
         </div>
 
-        {/* Month */}
-        <div className="section">August</div>
+        <div className="label-ud">At 7:30 pm</div>
+      </div>
+      {/* ------------- END DATE ROW ------------- */}
 
-        {/* DATE ROW — one line */}
-        <div className="date-row">
-          <div className="label-lr">
-            <span>Saturday</span>
-          </div>
-          <div className="day">19</div>
-          <div className="label-lr">
-            <span>At 7:30 pm</span>
-          </div>
+      {/* Venue */}
+      <div className="venue">Roche D’oree</div>
+      <div className="address">Mejdlaya – Zgharta highway</div>
+
+      {/* QR */}
+      <div className="footer">
+        <div className="qr" aria-hidden="true">
+          <QRCodeCanvas value="https://maps.app.goo.gl/GHdqmgDhWVjLs8k77" size={100} />
         </div>
-
-        {/* Year */}
-        <div className="section">2025</div>
-
-        <div className="venue">Roche D’oree</div>
-        <div className="address">Mejdlaya – Zgharta highway</div>
-
-        <div className="footer">
-          <div className="qr" aria-hidden="true">
-            <QRCodeCanvas
-              value="https://maps.app.goo.gl/your-venue-link"
-              size={100}
-            />
-          </div>
-          <div className="scan">Scan me</div>
-        </div>
-      </section>
+        <div className="scan">Scan me</div>
+      </div>
     </main>
   );
 }
