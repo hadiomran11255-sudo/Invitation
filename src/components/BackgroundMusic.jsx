@@ -32,7 +32,7 @@ export default function BackgroundMusic() {
   return (
     <>
       <audio ref={audioRef} loop>
-        <source src="/src/assets/music.mp3" type="audio/mpeg" />
+        <source src="/public/music.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
 
