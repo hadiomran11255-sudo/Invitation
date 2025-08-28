@@ -1,0 +1,171 @@
+:root{
+  --bg: #ffffff;
+  --text: #313131;
+  --muted: #5b5457;
+  --line: #a7a7a7;
+}
+
+*{ box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body{
+  margin: 0;
+  font-family: "Cormorant Garamond", "Gilda Display", serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ---------- Layout ---------- */
+.page{
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+
+.card{
+  width: min(92vw, 280px);
+  height: 600px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.15);
+  padding: 18px 16px;
+  position: relative;
+  outline: 1px solid rgba(0,0,0,.09);
+  overflow: hidden;
+}
+
+/* Stacking order: bg image (0) < hearts (1) < 3D ring + text (2/3) */
+.card > *{ position: relative; z-index: 2; }
+
+.bg-img{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: .18;                       
+  filter: contrast(.9) saturate(.9);
+  z-index: 0;
+}
+
+/* Hearts container */
+.hearts{
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Heart shape */
+.heart{
+  position: absolute;
+  top: -12%;
+  transform: translateX(0) rotate(45deg);
+  width: 14px; height: 14px;
+  background: currentColor;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.12));
+  opacity: .9;
+  animation: fall var(--fall-duration, 12s) linear infinite;
+  animation-delay: var(--fall-delay, 0s);
+}
+.heart::before, .heart::after{
+  content:""; position: absolute; width: 100%; height: 100%;
+  background: currentColor; border-radius: 50%;
+}
+.heart::before{ top: -50%; left: 0; }
+.heart::after { left: -50%; top: 0; }
+@keyframes fall { to { top: 110%; transform: translateX(var(--drift,0%)) rotate(45deg); } }
+
+/* Ring area */
+.ring-wrap{
+  width: 150px;              
+  height: 150px;
+  margin: 0 auto 16px;
+  position: relative;
+  
+  --hole: 60%;
+  --ring-x: 0px;
+  --ring-y: 0px;
+}
+
+/* keeps a pleasant angle */
+.ring-tilt{
+  --tilt: -16deg;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transform: rotate(var(--tilt));
+  z-index: 3;               
+}
+
+.ring-img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,.25));
+}
+
+/* rotation (keep or adjust speed) */
+@keyframes ring-spin{ to { transform: rotatey(360deg); } }
+.spin{ animation: ring-spin 10s linear infinite; }
+@media (prefers-reduced-motion: reduce){ .spin{ animation: none; } }
+
+/* ↓ Names centered inside the ring "hole" */
+.names{
+  position: absolute;
+  left: calc(50% + var(--ring-x));
+  top:  calc(50% + var(--ring-y));
+  transform: translate(-50%, -50%);
+  width: var(--hole);
+  height: var(--hole);
+  display: grid;             
+  place-items: center;
+  text-align: center;
+  pointer-events: none;
+  z-index: 3;               
+}
+
+/* Text styling inside the hole */
+.couple{
+  line-height: 1.2;
+  font-size: 20px;          
+  color: #2f2b2c;
+  /* subtle stroke so it reads on bright backgrounds */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.75),
+    0 0 2px rgba(255,255,255,.6);
+}
+
+/* Typography */
+.top-ar{ font-size: 12px; text-align: center; margin-bottom: 6px; }
+.heading{ text-align: center; font-size: 15px; line-height: 1.25; margin-bottom: 14px; }
+.section{ text-align: center; margin: 8px 0; font-size: 15px; }
+
+/* ---- Date row: one line, side lines ---- */
+.date-row{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+.label-lr{ flex: 1; display: flex; align-items: center; gap: 10px; }
+.label-lr::before, .label-lr::after{
+  content: ""; flex: 1; height: 2px; background: var(--line); opacity: .65;
+}
+.label-lr > span{ white-space: nowrap; font-size: 15px; }
+.day{ min-width: 2ch; text-align: center; font-size: 18px; letter-spacing: 1px; }
+
+/* Venue + QR */
+.footer{ position: absolute; left: 0; right: 0; bottom: 14px; text-align: center; }
+.venue{ margin-top: 8px; font-size: 15px; }
+.address{ margin-top: 4px; font-size: 13px; color: var(--muted); }
+.qr{ margin: 10px auto 4px; width: 104px; height: 104px; padding: 6px;
+     background: rgba(255,255,255,.75); border-radius: 8px; outline: 1px solid rgba(0,0,0,.06); }
+.scan{ font-size: 13px; margin-top: 6px; color: var(--muted); }
+
+/* soft edge glow */
+.card::before, .card::after{
+  content:""; position: absolute; left: 8px; right: 8px; height: 6px;
+  border-radius: 6px; background: rgba(0,0,0,.06); filter: blur(10px);
+}
+.card::before{ top: 8px; } .card::after{ bottom: 8px; }
