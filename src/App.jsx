@@ -1,11 +1,12 @@
 import FallingHearts from "./components/FallingHearts.jsx";
 import { QRCodeCanvas } from "qrcode.react";
-import bgImg from "./assets/wedding.jpg";     // background photo
-import ringImg from "./assets/ring.png";     // transparent PNG of the ring
-
+import bgImg from "./assets/wedding.jpg";     
+import ringImg from "./assets/ring.png";     
+import BackgroundMusic from "./components/BackgroundMusic.jsx";
 export default function App() {
   return (
     <main className="page">
+       <BackgroundMusic />
       {/* Background image */}
       <img src={bgImg} alt="" className="bg-img" />
 
@@ -63,6 +64,9 @@ export default function App() {
           <QRCodeCanvas value="https://maps.app.goo.gl/GHdqmgDhWVjLs8k77" size={100} />
         </div>
         <div className="scan">Scan me</div>
+        <button onClick={() => document.querySelector("audio").play()}>
+          Play Music
+        </button>
       </div>
     </main>
   );
