@@ -138,7 +138,7 @@ body {
 /* Venue + QR */
 .venue { margin-top: 8px; font-size: 16px; }
 .address { margin-top: 4px; font-size: 13px;  }
-.footer { margin-top: auto; padding-bottom: 16px; }
+.footer { margin-top: 80px; padding-bottom: 16px; }
 .qr {
   margin: 10px auto 4px;
   width: 104px; height: 104px;
